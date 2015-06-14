@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   get "register", to: "users#new"
   resources :users, except: [:new]
+
+
+  get "login", to: "sessions#new"
+
   resources :complaints
   
 end
