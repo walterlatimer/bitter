@@ -1,0 +1,9 @@
+<h1><%= @user.username %></h1>
+
+<h3>Complaints</h3>
+
+<% @user.complaints.each do |complaint| %>
+
+	<p><%= complaint.content %> | <%= time_ago_in_words(complaint.created_at) %> ago</p>
+
+<% end %>

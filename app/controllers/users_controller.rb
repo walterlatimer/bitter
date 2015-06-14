@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user
 
   def new
     @user = User.new
@@ -12,12 +13,19 @@ class UsersController < ApplicationController
     else
       redirect_to register_path
     end
+  end
 
+
+  def show 
   end
 
 
 
   private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:username, :password, :bio)

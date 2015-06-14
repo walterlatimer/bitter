@@ -1,10 +1,12 @@
 class ComplaintsController < ApplicationController
   before_action :set_complaint, only: [:show, :edit, :update, :destroy]
+  skip_before_action :redirect_unless_logged_in, only: [:index]
+  # before_action :redirect_unless_owner
 
   # GET /complaints
   # GET /complaints.json
   def index
-    @complaints = Complaint.all
+    @complaints = Complaint.all.order(created_at: :desc)
   end
 
   # GET /complaints/1
@@ -24,7 +26,7 @@ class ComplaintsController < ApplicationController
   # POST /complaints
   # POST /complaints.json
   def create
-    @complaint = Complaint.new(complaint_params)
+    @complaint = @current_user.complaints.new(complaint_params)
 
     respond_to do |format|
       if @complaint.save
@@ -69,6 +71,6 @@ class ComplaintsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def complaint_params
-      params.require(:complaint).permit(:content)
+      params.require(:complaint).permit(:content, :user_id)
     end
 end

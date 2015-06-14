@@ -13,10 +13,13 @@
   <tbody>
     <% @complaints.each do |complaint| %>
       <tr>
-        <td><%= complaint.content %></td>
+        <td>
+          <strong><%= link_to complaint.user.username, complaint.user %></strong>: 
+          <%= complaint.content %>
+        </td>
         <td><%= link_to 'Show', complaint %></td>
-        <td><%= link_to 'Edit', edit_complaint_path(complaint) %></td>
-        <td><%= link_to 'Destroy', complaint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_complaint_path(complaint) if @current_user == complaint.user %></td>
+        <td><%= link_to 'Destroy', complaint, method: :delete, data: { confirm: 'Are you sure?' } if @current_user == complaint.user %></td>
       </tr>
     <% end %>
   </tbody>
